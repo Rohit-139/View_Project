@@ -1,0 +1,10 @@
+<h3>Your Profile</h3>
+
+<%= @current_user.id %>
+<%= @current_user.name %>
+<%= @current_user.password %>
+<%= @current_user.contact %>
+
+<%= link_to "Back", customers_path %>
+<%= link_to "Edit Profile", new_customers_path %>
+<%= button_to "Destroy Account", @current_user, method: :delete %>

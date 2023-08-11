@@ -1,0 +1,6 @@
+<h1>Programs</h1>
+
+<% @programs.each do |program| %>
+  name:<%= program.name %>
+  video:<%= video_tag url_for(program.video), controls: true %>
+<%end%>

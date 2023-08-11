@@ -1,0 +1,9 @@
+<h2 style="text-align: center; color: green">Courses</h2>
+
+<% if @programs.empty? %>
+  <%= "there is no courses available" %>
+<% else %>
+  <% @programs.each do |program| %>
+    <%= program.name %>
+  <% end %>
+<% end %>
