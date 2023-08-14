@@ -1,1 +1,4 @@
-<h2>Welcome your portal <%= @current_user.name @current_user.type %></h2>
+<h2 style="text-align: center; color: darkturquoise ;" >Welcome your portal <%= @user.name  %></h2>
+<div><%= flash[:notice] %></div>
+
+<%= link_to "My Profile", instructors_path(@user) %>

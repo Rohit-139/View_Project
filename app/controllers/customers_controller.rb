@@ -1,6 +1,6 @@
-class CustomersController < ApiController
+class CustomersController < ApplicationController
 
-  # skip_before_action :user_authenticate, only: [:new, :create]
+  skip_before_action :user_authenticate, only: [:new, :create]
   def index
     @programs = Program.where(status: 'active')
   end
@@ -9,7 +9,7 @@ class CustomersController < ApiController
   end
 
   def show
-    @current_user
+    @user = User.find(params[:id])
   end
 
   def new
@@ -19,15 +19,16 @@ class CustomersController < ApiController
   def create
     @customer = Customer.new(customer_params)
     if @customer.save
-      render root_path, notice: "Created Successfully"
+      flash[:notice] = "User created successfully"
+      redirect_to root_path
     else
-      render root_path, notice: "Please fill valid credentials"
+      render :new
     end
   end
 
   def destroy
     if @current_user.destroy
-      redirect_to root_path, notice: "User destroyed successfully"
+      redirect_to root_path
     else
       render :show
     end
@@ -36,6 +37,6 @@ class CustomersController < ApiController
   private
 
   def customer_params
-    params.permit(:name, :email, :password, :contact)
+    params.require(:customer).permit(:name, :email, :password, :contact)
   end
 end

@@ -1,0 +1,7 @@
+<%= form_with url: "/register" do |form| %>
+
+  <%= form.select :choice, ["Instructor", "Customer" ] %>
+
+  <%= form.button "Register" %>
+
+<% end %>

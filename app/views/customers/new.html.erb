@@ -1,24 +1,38 @@
+<h3 style="text-align:center; color: Red;"> Register Customer </h3>
+
 <%= form_with model:@customer do |form| %>
 
   <div>
-    <%= form.label :name %>
     <%= form.text_field :name %>
-  </div>
+    <%= form.label :name %>
+    <% @customer.errors.full_messages_for(:name).each do |message| %>
+    <div><%= message %></div>
+    <% end %>
+  </div><br>
 
   <div>
-    <%= form.label :email %>
     <%= form.text_field :email %>
-  </div>
+    <%= form.label :email %>
+    <% @customer.errors.full_messages_for(:email).each do |message| %>
+    <div><%= message %></div>
+    <% end %>
+  </div><br>
 
   <div>
+    <%= form.password_field :password %>
     <%= form.label :password %>
-    <%= form.text_field :password %>
-  </div>
+    <% @customer.errors.full_messages_for(:password).each do |message| %>
+    <div><%= message %></div>
+    <% end %>
+  </div><br>
 
   <div>
-    <%= form.label :contact %>
     <%= form.text_field :contact %>
-  </div>
+    <%= form.label :contact %>
+    <% @customer.errors.full_messages_for(:contact).each do |message| %>
+    <div><%= message %></div>
+    <% end %>
+  </div><br>
 
   <div>
     <%= form.submit "create" %>

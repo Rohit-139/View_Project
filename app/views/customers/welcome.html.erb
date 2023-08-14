@@ -1,6 +1,9 @@
-<h2>Welcome your portal <%= @current_user.name %></h2>
+<h2 style="text-align: center">Welcome your portal <%= @current_user.name %></h2>\
+
+<%= flash[:notice] %>
 
 <%= link_to "Programs", customers_path %><br>
-<%= link_to "Profile", @current_user %>
-<%= link_to ""
+<%= link_to "Profile", @current_user %><br>
+<%= link_to "Log Out", '/logout' %><br>
+<%= link_to "Enroll", '/'
 

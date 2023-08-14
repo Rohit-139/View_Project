@@ -17,6 +17,10 @@ class EnrollsController < ApiController
     @programs = Programm.joins(:category).where('categories.name like ?',"%#{params[:name]}%")
   end
 
+  def new
+    @enroll = Enroll.new
+  end
+
   def create
     program = Programm.find_by(name: params[:name], status: 'active')
     if program.present?

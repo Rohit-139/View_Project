@@ -1,11 +1,12 @@
-<h1> Welcome to Portal </h1>
+<div style="color:red"><%= flash[:notice] %></div>
+<h1 style="text-align: center; color: blueviolet;"> Welcome to Portal </h1>
 <%= form_with model: @user, url:"/login", method: :post do |form| %>
 
-  <%= form.label :email %>
   <%= form.text_field :email %><br>
+  <%= form.label :email %><br>
 
-  <%= form.label :password %>
-  <%= form.text_field :password %><br>
+  <%= form.password_field :password %><br>
+  <%= form.label :password %><br>
 
   <%= form.button "Sign in" %>
 

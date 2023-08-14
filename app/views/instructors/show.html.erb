@@ -1,4 +1,8 @@
 <h2><%=@current_user.name %></h2>
 
-<%= @current_user.id %>
-<
+<%= @current_user.id %><br>
+<%= @current_user.name %><br>
+<%= @current_user.contact %><br>
+
+<%= link_to "Edit Profile", edit_instructors_path(@current_user) %>
+<%= button_to "Delete Account","/instructors", method: :delete %>
