@@ -1,6 +1,8 @@
-<h1>Programs</h1>
-
-<% @programs.each do |program| %>
-  name:<%= program.name %>
-  video:<%= video_tag url_for(program.video), controls: true %>
-<%end%>
+<h3 style="text-align: center"> Program </h3>
+<% if @programs.present? %>
+  <% @programs.each do |program| %>
+    <%=link_to "#{program.name}", program_path(program) %>
+  <%end%>
+<% else %>
+  <h4 style="color: red;"> Record not found</h4>
+<% end %>

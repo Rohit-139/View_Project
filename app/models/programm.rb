@@ -1,7 +1,7 @@
 class Programm < ApplicationRecord
   belongs_to :user
   belongs_to :category
-  has_many :enrolls
+  has_many :enrolls, dependent: :destroy
 
   has_one_attached :video
 

@@ -3,11 +3,9 @@ class InstructorsController < ApplicationController
   skip_before_action :user_authenticate, only: [:new, :create]
 
   def welcome
-    @current_user
   end
 
   def show
-    @current_user
   end
 
   def new
@@ -18,7 +16,7 @@ class InstructorsController < ApplicationController
     @instructor = Instructor.new(instruct_params)
     if @instructor.save
       flash[:notice] = "Successfully created"
-      redirect_to root_path
+      redirect_to instructors_welcome_path
     else
       render :new
     end
@@ -29,14 +27,12 @@ class InstructorsController < ApplicationController
   end
 
   def update
-    @instructor = @current_user
-    if @instructor.update(instruct_params)
+    if @current_user.update(instruct_params)
       flash[:notice] = "Updated successfully"
-      redirect_to "/welcome"
+      redirect_to instructors_welcome_path
     else
       render :edit
     end
-
   end
 
   def destroy

@@ -1,8 +1,28 @@
-<h2><%=@current_user.name %></h2>
+<%= flash[:notice] %>
 
-<%= @current_user.id %><br>
-<%= @current_user.name %><br>
-<%= @current_user.contact %><br>
 
-<%= link_to "Edit Profile", edit_instructors_path(@current_user) %>
-<%= button_to "Delete Account","/instructors", method: :delete %>
+
+
+<table class="table">
+  <thead  class="thead-dark">
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Name</th>
+      <th scope="col">Contact Number</th>
+      <th scope="col">Edit</th>
+      <th scope="col">Delete</th>
+      <th scope="col">Password</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row"><%= @current_user.id %><br></th>
+      <td><%= @current_user.name %><br></td>
+      <td><%= @current_user.contact %><br></td>
+      <td><%= link_to "Edit Profile", edit_instructor_path(@current_user) %></td>
+      <td><%= button_to "Delete Account","/instructors/#{@current_user.id}", method: :delete %></td>
+      <td><%= button_to "Change Password", "/password", method: :get %>
+    </tr>
+
+  </tbody>
+</table>

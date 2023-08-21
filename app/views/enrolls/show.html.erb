@@ -1,0 +1,8 @@
+<h4 style="color: green;"> <%= flash[:notice] %> </h4>
+<h3>id: <%= @id %> </h3><br>
+<h3> <%= @enroll.name %> </h3><br>
+<%= video_tag url_for(@enroll.video), controls: true %>
+
+<%= button_to 'edit status', edit_enroll_path(@id), method: :get %>
+
+

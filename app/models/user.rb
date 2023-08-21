@@ -1,7 +1,7 @@
 class User < ApplicationRecord
 
-  has_many :programms
-  has_many :enrolls
+  has_many :programms, dependent: :destroy
+  has_many :enrolls, dependent: :destroy
 
   validates :name, presence:true, format: { with: /\A[a-zA-Z\s]+\z/, message: "only allows letters and spaces" }
   validates :email, presence:true, uniqueness:true, format: {with: URI::MailTo::EMAIL_REGEXP}

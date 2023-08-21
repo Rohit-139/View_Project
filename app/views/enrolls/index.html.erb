@@ -1,0 +1,7 @@
+<h2 style="text-align:center">My Courses</h2>
+
+<% @enrolls.each do |enroll| %>
+  <%=link_to "#{enroll.name}", enroll_path(enroll) %>
+<% end %>
+
+  

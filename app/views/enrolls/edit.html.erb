@@ -1,0 +1,9 @@
+<h4>Status</h4>
+<%= form_with model: @enroll, method: :patch do |form| %>
+
+  <%= form.radio_button :status, 'started' %> Started
+  <%= form.radio_button :status, 'finished' %> Finished
+
+  <%= form.submit 'Save' %>
+
+<% end %>

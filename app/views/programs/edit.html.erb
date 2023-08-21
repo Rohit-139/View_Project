@@ -1,6 +1,6 @@
 <h1>Program</h1>
 
-<%= form_with model: @program, url:'/programs',method: :post do |form| %>
+<%= form_with model: @program do |form| %>
   <div>
     <%= form.label :name %><br>
     <%= form.text_field :name %>
@@ -20,7 +20,7 @@
     <%= form.label :instructor_id %><br>
     <%= form.number_field :user_id %>
   </div>
- <div>
+  <div>
     <%= form.label :category_id %><br>
     <%= form.number_field :category_id %>
   </div>

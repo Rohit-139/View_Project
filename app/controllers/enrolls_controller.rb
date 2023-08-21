@@ -1,5 +1,4 @@
-class EnrollsController < ApiController
-
+class EnrollsController < ApplicationController
 
   def index
     if params[:name].present?
@@ -10,45 +9,46 @@ class EnrollsController < ApiController
   end
 
   def show
-    @enroll = @current_user.enrolls.find_by(id: params[:id])
+    @id = params[:id]
+    @enroll = Programm.joins(:enrolls).find_by(enrolls: {id: params[:id] })
   end
 
   def category_wise_courses
     @programs = Programm.joins(:category).where('categories.name like ?',"%#{params[:name]}%")
   end
 
-  def new
-    @enroll = Enroll.new
-  end
-
-  def create
-    program = Programm.find_by(name: params[:name], status: 'active')
-    if program.present?
-      @enroll = @current_user.enrolls.new(name: program.name, status: 'started', programm_id: program.id)
-      if @enroll.save
-        render @enroll, status: :created
-      else
-        render "/welcome", @enroll.errors.messages
-      end
+  def new_enroll
+    program = Programm.find_by(id: params[:id])
+    @enroll = @current_user.enrolls.new(name: program.name, status: 'started',  programm_id: program.id)
+    if @enroll.save
+      flash[:notice] = "You have Successfully enrolled"
+      redirect_to customers_welcome_path
     else
-      render "/welcome",notice: 'No Course found with this name'
+      flash[:notice] = "You have already enrolled in this course"
+      render "customers/welcome"
     end
   end
 
+  def edit
+    @enroll = Enroll.find_by(id:params[:id])
+  end
+
   def update
-    @enroll = @current_user.enrolls.find_by(id:params[:id])
-    if @enroll.level == params[:status]
-      render @enroll, notice: "Program has already #{params[:status]} status"
+    byebug
+    @enroll = Enroll.find_by(id:params[:id])
+    if @enroll.status == params[:status]
+      redirect_to enroll_path
     else
       @current_user.enrolls.update(level: 'finished')
-      render plain: 'Successfully Marked as Finished', status: :ok
+      flash[:plain]= 'Successfully Marked as Finished'
+      render
     end
   end
 
   def destroy
     @enroll = @current_user.enrolls.find_by(id:params[:id])
     @enroll.destroy
-    render "/welcome", notice: 'Deleted Successfully' }
+    render "/welcome"
   end
 
 end

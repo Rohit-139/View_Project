@@ -1,4 +1,84 @@
-<h2 style="text-align: center; color: darkturquoise ;" >Welcome your portal <%= @user.name  %></h2>
-<div><%= flash[:notice] %></div>
+<style>
+   body {
+      background-color: lightblue;
+   }
+   .navbar {
+  background-color: lightskyblue;
+  color: #FFFFFF;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+}
+.navbar-title {
+  font-size: 24px;
+  margin: 0;
+}
+.navbar-buttons {
+  display: flex;
+  gap: 10px;
+}
+.navbar-button {
+  background-color: navy;
+  color: #FFFFFF;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  text-decoration: none;
+  cursor: pointer;
+}
+.navbar-button:hover {
+  background-color: #27AE60;
+}
+h1 {
+  color: black;
+}
+p {
+  text-align: center;
+  margin-top: 70px;
+  margin-left: 700px;
+  font-size: 20px;
+  color: navy;
+}
+.abc {
+    margin-left: 800px;
+    color: black;
+    background-color: green;
+    font-weight: bold;
+}
+.flash {
+    margin-left: 800px;
+    color: brown;
+}
+</style>
+<section class="vh-100 bg-image"
+  style="background-image: url(<%= asset_path 'abc.jpg' %>); background-repeat: no-repeat; background-size: cover; background-position: center center">
+<nav class="navbar">
+  <h1 class="navbar-title">Instructor</h1>
+  <%= form_with model:@programs, url: programs_path, method: :get do |form| %>
+    <div class="input-group">
+      <%= form.select :choice, ["name", "status"] %>&nbsp;
+      <%= form.text_field :name, class:"form-control" %>&nbsp;
+      <%=form.submit "Search", class:"btn btn-outline-primary" %>
+   </div>
 
-<%= link_to "My Profile", instructors_path(@user) %>
+  <% end %>
+
+   <div class="navbar-buttons">
+
+    <%= button_to "My Profile",@current_user,method: :get, class: 'navbar-button' %>
+    <%= button_to "Log Out", '/logout',method: :get, class: 'navbar-button' %>
+    <%= button_to "Create Program", new_program_path, method: :get, class: 'navbar-button' %>
+   </div>
+
+</nav>
+<div style="text-align: center; color: red"><h3><%= flash[:notice] %></h3></div>
+</section>
+
+
+</nav>
+
+
+
+
+

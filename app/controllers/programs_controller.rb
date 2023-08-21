@@ -1,10 +1,18 @@
 class ProgramsController < ApplicationController
-
   def index
-    if params[:name].present?
+    if params[:choice] == "name" && params[:name].present?
       @programs = @current_user.programms.where("name like ?","%#{params[:name]}%")
+      render 'instructors/welcome'
+    elsif params[:choice] == "status" && params[:name].present?
+      if (params[:name] == "active" || params[:name] == "Active")
+        @programs = @current_user.programms.active
+      elsif params[:name] == "inactive" || params[:name]=="Inactive"
+        @programs = @current_user.programms.inactive
+      else
+        @programs = @current_user.programms.all
+      end
     else
-      @programs = @current_userprogramms.all
+      @programs = @current_user.programms.all
     end
   end
 
@@ -19,35 +27,37 @@ class ProgramsController < ApplicationController
   def create
     @program = @current_user.programms.new(program_params)
     if @program.save
-      redirect_to programs_path
+      flash[:notice] = "Created Successfully"
+      redirect_to instructors_welcome_path
     else
       render :new
     end
-  end
-
-  def filter_on_status_basis
-    @programs = @current_user.programms.where(status: params[:status])
   end
 
   def edit
   end
 
   def update
-    @program = @current_user.programms.find_by(id:params[:id])
-    if @program.status == params[:status]
-      render plain: "Program has already #{params[:status]} "
+    @program = Program.find(params[:id])
+
+    if @program.update(program_params)
+      falsh[:notice] = "Updated successfully"
+      redirect_to @program
     else
-      @program.update(status: params[:status])
-      render @program, status: :ok
+      falsh[:notice] = "Updation Failed"
+      render :edit
     end
-  rescue NoMethodError => e
-    render plain: 'No Record found with this id'
   end
 
   def destroy
-    @program = @current_user.programms.find_by(id:params[:id])
-    @program.destroy
-    render "instructors/welcome", message: 'Program deleted Successfully', status: :ok
+    @program = Programm.find(params[:id])
+
+    if @program.destroy
+      flash[:notice] = "Deleted Successfully"
+      redirect_to instructors_welcome_path
+    else
+      render :show
+    end
   end
 
   private
