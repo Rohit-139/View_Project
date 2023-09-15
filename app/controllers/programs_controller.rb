@@ -2,7 +2,6 @@ class ProgramsController < ApplicationController
   def index
     if params[:choice] == "name" && params[:name].present?
       @programs = @current_user.programms.where("name like ?","%#{params[:name]}%")
-      render 'instructors/welcome'
     elsif params[:choice] == "status" && params[:name].present?
       if (params[:name] == "active" || params[:name] == "Active")
         @programs = @current_user.programms.active

@@ -2,9 +2,9 @@ class EnrollsController < ApplicationController
 
   def index
     if params[:name].present?
-      @enrolls = @current_user.enrolls.where("name LIKE '%#{params[:name]}'")
+      @enrolls = current_user.enrolls.where("name LIKE '%#{params[:name]}'")
     else
-      @enrolls = @current_user.enrolls
+      @enrolls = current_user.enrolls
     end
   end
 
@@ -19,7 +19,7 @@ class EnrollsController < ApplicationController
 
   def new_enroll
     program = Programm.find_by(id: params[:id])
-    @enroll = @current_user.enrolls.new(name: program.name, status: 'started',  programm_id: program.id)
+    @enroll = current_user.enrolls.new(name: program.name, status: 'started',  programm_id: program.id)
     if @enroll.save
       flash[:notice] = "You have Successfully enrolled"
       redirect_to customers_welcome_path
@@ -46,7 +46,7 @@ class EnrollsController < ApplicationController
   end
 
   def destroy
-    @enroll = @current_user.enrolls.find_by(id:params[:id])
+    @enroll = current_user.enrolls.find_by(id:params[:id])
     @enroll.destroy
     render "/welcome"
   end

@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
 
-  root "users#login_portal"
+  devise_for :users, controllers: {
+    registrations: 'users/registrations'
+  }
+
+  root "users#welcome"
 
 
   resources :instructors, only: [:show, :new, :create,:edit, :update, :destroy]
@@ -16,6 +20,7 @@ Rails.application.routes.draw do
   get '/category_wise', to: 'enrolls#category_wise_courses'
   get '/new/:id', to: 'enrolls#new_enroll'
 
+
   resource :users, only: [:destroy]
   get '/logout', to: 'users#logout'
   post'/login', to: 'users#login'
@@ -24,5 +29,7 @@ Rails.application.routes.draw do
   post '/register', to: 'users#register'
   get '/password', to: 'users#password'
   post '/change_password', to: 'users#change_password'
+  get "/verify/:id", to: 'users#verify'
+  post "/verify_otp/:id", to: 'users#verify_otp'
 
 end

@@ -1,0 +1,16 @@
+<h6>Enter OTP</h6><br><br>
+
+<%= form_with url: "/verify_otp/#{@user.id}" do |f| %>
+
+  <div>
+    <%= f.label :OTP %>
+    <%= f.text_field :otp %>
+  </div>
+
+  <div>
+    <%= f.button "Submit" %>
+  </div>
+
+<% end %>
+
+<%= button_to "Resend OTP", "/verify/#{@user.id}", method: :get %>

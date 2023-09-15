@@ -1,6 +1,6 @@
 class CustomersController < ApplicationController
 
-  skip_before_action :user_authenticate, only: [:new, :create]
+  # skip_before_action :user_authenticate, only: [:new, :create]
   def index
     @programs = Programm.where(status: 'active')
   end
@@ -18,6 +18,7 @@ class CustomersController < ApplicationController
   def create
     @customer = Customer.new(customer_params)
     if @customer.save
+      RegisterationMailer.welcome(@customer).deliver_now!
       flash[:notice] = "User created successfully"
       redirect_to root_path
     else
@@ -50,6 +51,6 @@ class CustomersController < ApplicationController
   private
 
   def customer_params
-    params.require(:customer).permit(:name, :email, :password, :contact)
+    params.require(:customer).permit(:name, :email, :password, :contact).merge(status: 'inactive')
   end
 end

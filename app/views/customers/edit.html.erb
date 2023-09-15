@@ -1,11 +1,11 @@
 <h3 style="text-align:center; color: Red;"> Register Customer </h3>
 
-<%= form_with model:@customer do |form| %>
+<%= form_with model:current_user do |form| %>
 
   <div>
     <%= form.text_field :name %>
     <%= form.label :name %>
-    <% @customer.errors.full_messages_for(:name).each do |message| %>
+    <% current_user.errors.full_messages_for(:name).each do |message| %>
     <div><%= message %></div>
     <% end %>
   </div><br>
@@ -13,7 +13,7 @@
   <div>
     <%= form.text_field :email %>
     <%= form.label :email %>
-    <% @customer.errors.full_messages_for(:email).each do |message| %>
+    <% current_user.errors.full_messages_for(:email).each do |message| %>
     <div><%= message %></div>
     <% end %>
   </div><br>
@@ -21,7 +21,7 @@
   <div>
     <%= form.password_field :password %>
     <%= form.label :password %>
-    <% @customer.errors.full_messages_for(:password).each do |message| %>
+    <% current_user.errors.full_messages_for(:password).each do |message| %>
     <div><%= message %></div>
     <% end %>
   </div><br>
@@ -29,7 +29,7 @@
   <div>
     <%= form.text_field :contact %>
     <%= form.label :contact %>
-    <% @customer.errors.full_messages_for(:contact).each do |message| %>
+    <% current_user.errors.full_messages_for(:contact).each do |message| %>
     <div><%= message %></div>
     <% end %>
   </div><br>

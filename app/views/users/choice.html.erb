@@ -1,18 +1,22 @@
 <head>
   <style>
-    select{
-      padding-bottom: 10px;
-      margin-bottom: 100px;
-    }
     h5 {
       position: absolute;
       top: 60px;
-      right: 155px;
+      right: 65px;
     }
     button {
       position: absolute;
+      margin-left: 150px;
       bottom: 250px;
-      right: 220px;
+      rigbutton: 220px;
+    }
+    select {
+      text-align: center ;
+      border-radius: 5px;
+      padding-bottom: 15px;
+      margin-bottom: 100px;
+      padding-right: 200px;
     }
   </style>
 </head>
@@ -37,13 +41,7 @@
                   </div>
 
                   <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px; text-align: center;">Welcome to E-learning</h5>
-
-                  <select class="form-select" aria-label="Default select example">
-                    <option selected>Select Type</option>
-                    <option value="Instructor">Instructor</option>
-                    <option value="Customer">Customer</option>
-                  </select>
-
+                  <%= form.select :choice, ['Instructor', 'Customer'],class: 'select'%>
                   <div class="pt-1 mb-4">
                     <%= form.button "Register", class: "btn btn-outline-dark" %>
                   </div>

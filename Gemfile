@@ -1,3 +1,4 @@
+
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
@@ -28,6 +29,7 @@ gem "stimulus-rails"
 gem "jbuilder"
 gem "jwt"
 gem "byebug"
+gem 'rotp'
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
@@ -72,3 +74,9 @@ group :test do
   gem "selenium-webdriver"
   gem "webdrivers"
 end
+
+gem "rails-erd"
+
+gem "devise"
+
+gem "byebug"

@@ -1,6 +1,6 @@
 class InstructorsController < ApplicationController
 
-  skip_before_action :user_authenticate, only: [:new, :create]
+  # skip_before_action :user_authenticate, only: [:new, :create]
 
   def welcome
   end
@@ -14,9 +14,11 @@ class InstructorsController < ApplicationController
 
   def create
     @instructor = Instructor.new(instruct_params)
+
     if @instructor.save
+      RegisterationMailer.welcome(@instructor).deliver_now!
       flash[:notice] = "Successfully created"
-      redirect_to instructors_welcome_path
+      redirect_to root_path
     else
       render :new
     end
@@ -47,7 +49,7 @@ class InstructorsController < ApplicationController
   private
 
   def instruct_params
-    params.require(:instructor).permit(:name, :email, :password, :contact)
+    params.require(:instructor).permit(:name, :email, :password, :contact).merge(status: 'inactve')
   end
 
 end

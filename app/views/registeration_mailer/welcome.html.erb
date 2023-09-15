@@ -1,0 +1,12 @@
+<h1>Welcome</h1>
+<p>Hi <%= @user.name %>,</p>
+<p>
+Welcome to the Sample App! Click on the link below to activate your account:
+</p><br><br>
+<p>
+  click on the mentioned link below to verify your account:
+</p>
+
+<%= link_to "Verify", "http://localhost:3000/verify/#{@user.id}" %>
+
+

@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-  skip_before_action :user_authenticate, only:[:login, :welcome, :register, :choice]
+  # skip_before_action :user_authenticate, only: [:login, :welcome, :register, :choice, :verify,  :verify_otp]
 
   def login_portal
   end
@@ -9,23 +9,46 @@ class UsersController < ApplicationController
   end
 
   def register
-    # byebug
     if params[:choice] == "Instructor"
       redirect_to new_instructor_url
-
     else
       redirect_to new_customer_path
     end
   end
 
+  def verify
+    @user = User.find_by(id: params[:id])
+    otp = rand.to_s[2..7]
+    @a = Time.now.strftime('%s')
+    RegisterationMailer.send_otp(@user,otp).deliver_now
+    @user.update(otp: otp)
+  end
+
+  def verify_otp
+    @user = User.find(params[:id])
+    if @user.otp == params[:otp].to_i
+      @user.update(status: 'active')
+      render :login_portal
+    else
+      flash[:notice] = "Invalid OTP"
+      redirect_to "/verify/#{@user.id}"
+    end
+  end
+
   def login
     @user = User.find_by(email: params[:email], password: params[:password])
+
     if @user.present?
-      session[:current_user] = jwt_encode(user_id: @user.id)
-      if @user.type == "Instructor"
-        redirect_to instructors_welcome_path
+      if @user.status == 'active'
+        session[:current_user] = jwt_encode(user_id: @user.id)
+        if @user.type == "Instructor"
+          redirect_to instructors_welcome_path
+        else
+          redirect_to customers_welcome_path
+        end
       else
-        redirect_to customers_welcome_path
+        flash[:notice] = "Invalid email & password"
+        render :login_portal
       end
     else
       flash[:notice] = "Invalid email & password"
@@ -44,12 +67,14 @@ class UsersController < ApplicationController
   end
 
   def change_password
-    # byebug
     if @current_user.password == params[:current_password]
       if params[:new_password] == params[:confirm_password]
-        @current_user.update(password: params[:new_password])
-        flash[:notice] = "Password Changed"
-        redirect_to instructors_welcome_path
+        if @current_user.update(password: params[:new_password])
+          flash[:notice] = "Password Changed"
+          redirect_to instructors_welcome_path
+        else
+          flash[:notice] = "New password not fullfill the requirements"
+        end
       else
         flash[:notice] = "Password mismatched"
         redirect_to password_path
